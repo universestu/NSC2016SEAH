@@ -1,0 +1,383 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/mui.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/all.css" rel="stylesheet" type="text/css" />
+    <script src="js/mui.min.js"></script>
+   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="https://netpie.io/microgear.js"></script>
+    <script src="js/all.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500italic,500' rel='stylesheet' type='text/css'>
+    <script src="static/script.js"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', []);
+
+app.controller('myCtrl', function($scope,$http,$timeout) {
+  function Loop(){
+            var timer;
+ $scope.counter = 0;
+       function myLoop(){
+           $scope.counter++;
+
+
+            $http.get('data_Refrigerator.json').success (function(data){
+        
+        $scope.Value = data;
+        
+
+});
+           
+       // When the timeout is defined, it returns a
+                    // promise object.
+                    timer = $timeout(
+                        function() { 
+                            console.log( "Timeout executed", Date.now() ); 
+                        },
+                        1000
+                    );
+  
+                    
+                    timer.then(
+                        function() { 
+                            console.log( "Timer resolved!");
+              myLoop();
+ 
+                        },
+                        function() { 
+                            console.log( "Timer rejected!" ); 
+                        }
+                    );
+                }
+
+                myLoop();
+ 
+                    // When the DOM element is removed from the page,
+                    // AngularJS will trigger the $destroy event on
+                    // the scope. 
+          // Cancel timeout
+                    $scope.$on(
+                        "$destroy",
+                        function( event ) { 
+                            $timeout.cancel( timer ); 
+                        }
+                    );
+    
+}
+Loop();
+
+
+});
+
+
+function handleClick(cb) {
+  if(cb=true){alert("true");}
+  if(cb=false){alert("false");}
+  
+}
+
+ $(function () {
+
+    Highcharts.setOptions({
+        global : {
+            useUTC : false
+        }
+    });
+
+    // Create the chart
+    $('#chart').highcharts('StockChart', {
+        chart : {
+            events : {
+                load : function () {
+
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    setInterval(function () {
+                      $.getJSON('data_Refrigerator.json', function (data) {
+                  
+                  var x = (new Date()).getTime(), // current time
+                            y =  data.value1; 
+series.addPoint([x, y], true, true);
+                });
+                        
+                        
+                    }, 1000);
+                }
+            }
+        },
+
+        rangeSelector: {
+          allButtonsEnabled: true,
+            buttons: [{
+  type: 'minute',
+  count: 1,
+  text: '1min'
+},{
+  type: 'minute',
+  count: 5,
+  text: '5min'
+},{
+  type: 'day',
+  count: 1,
+  text: '1day'
+}, {
+  type: 'day',
+  count: 7,
+  text: '7day'
+},{
+  type: 'month',
+  count: 1,
+  text: '1m'
+}, {
+  type: 'month',
+  count: 3,
+  text: '3m'
+}, {
+  type: 'ytd',
+  text: 'YTD'
+}, {
+  type: 'year',
+  count: 1,
+  text: '1y'
+}, {
+  type: 'all',
+  text: 'All'
+}],
+            inputEnabled: false,
+            selected: 0
+        },
+
+        title : {
+            text : 'Save Energy At Home '
+        },
+
+        exporting: {
+            enabled: false
+        },
+
+        series : [{
+            name : 'Current',
+            data : (function () {
+                // generate an array of random data
+                var data = [], time = (new Date()).getTime(), i;
+
+                for (i = -999; i <= 0; i += 1) {
+                    data.push([
+                        time + i * 1000,
+                        data.value1
+                    ]);
+                }
+                return data;
+            }())
+        }]
+    });
+
+});
+
+
+
+
+
+window.onload = function(){
+  //canvas initialization
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  //dimensions
+  var W = canvas.width;
+  var H = canvas.height;
+  //Variables
+  
+  var degrees = 0;
+  var new_degrees = 0;
+  var difference = 0;
+  var bgcolor = "#448AFF"; //green looks better to me
+  var color = "#2962FF";
+  var text;
+  var animation_loop, redraw_loop;
+  
+  function init()
+  {
+    //Clear the canvas everytime a chart is drawn
+    ctx.clearRect(0, 0, W, H);
+    
+    //Background 360 degree arc
+    ctx.beginPath();
+    ctx.strokeStyle = bgcolor;
+    ctx.lineWidth = 30;
+    ctx.arc(W/2, H/2, 100, 0, Math.PI*2, false); //you can see the arc now
+    ctx.stroke();
+    
+    //gauge will be a simple arc
+    //Angle in radians = angle in degrees * PI / 180
+    var radians = degrees * Math.PI / 180;
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 30;
+    //The arc starts from the rightmost end. If we deduct 90 degrees from the angles
+    //the arc will start from the topmost end
+    ctx.arc(W/2, H/2, 100, 0 - 90*Math.PI/180, radians - 90*Math.PI/180, false); 
+    //you can see the arc now
+    ctx.stroke();
+    
+    //Lets add the text
+    ctx.fillStyle = color;
+    ctx.font = "50px bebas";
+    text = Math.floor(degrees/360*100) + "%";
+    //Lets center the text
+    //deducting half of text width from position x
+    text_width = ctx.measureText(text).width;
+    //adding manual value to position y since the height of the text cannot
+    //be measured easily. There are hacks but we will keep it manual for now.
+    ctx.fillText(text, W/2 - text_width/2, H/2 + 15);
+  }
+
+  
+  function draw()
+  {
+    //Cancel any movement animation if a new chart is requested
+    if(typeof animation_loop != undefined) clearInterval(animation_loop);
+    
+    //random degree from 0 to 360
+    $.getJSON('data_index.json', function (data) {
+                  
+                  full = data.value1;
+
+                });
+     $.getJSON('data_Refrigerator.json', function (data) {
+                  
+                  new_degrees = Math.round((data.value1/full)*360);
+
+                });
+
+
+               
+    
+    difference = new_degrees - degrees;
+    //This will animate the gauge to new positions
+    //The animation will take 1 second
+    //time for each frame is 1sec / difference in degrees
+    animation_loop = setInterval(animate_to, 1000/difference);
+  }
+  
+  //function to make the chart move to new degrees
+  function animate_to()
+  {
+    //clear animation loop if degrees reaches to new_degrees
+    if(degrees == new_degrees) 
+      clearInterval(animation_loop);
+    
+    if(degrees < new_degrees)
+      degrees++;
+    else
+      degrees--;
+      
+    init();
+  }
+  
+  //Lets add some animation for fun
+  draw();
+  redraw_loop = setInterval(draw, 2000); //Draw a new chart every 2 seconds
+  }
+
+
+</script>
+
+  </head>
+  <body>
+    <div id="sidedrawer" class="mui--no-user-select">
+      <div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">SEAH</div>
+     <div class="mui--divider-bottom"><center>
+  <a href="index.html"><img src= "img/SEAH.png" width="60" ></a> </center>
+
+</div>
+<div class="mui--divider-bottom"><a href="air.html"><img src= "img/air.png" width="50"></a></div>
+<div class="mui--divider-bottom"><a href="Fan.html"><img src= "img/fan.png" width="50"></a></div>
+<div class="mui--divider-bottom"><a href="Light.html"><img src= "img/bulb.png" width="50"></a></div>
+<div class="mui--divider-bottom"><a href="Television.html"><img src= "img/tv.png" width="50"></a></div>
+<div class="mui--divider-bottom"><a href="Refrigerator.html"><act><img src= "img/refrigerator.png" width="50"></a></act></div>
+<div class="mui--divider-bottom"><a href="Microwave.html"><img src= "img/microwave.png" width="50"></a></div>
+<div class="mui--divider-bottom"><a href="heatwater.html"><img src= "img/heatwater.png" width="50"></a></div>
+           
+
+        
+        
+     
+    </div>
+    <header id="header">
+      <div class="mui-appbar mui--appbar-line-height">
+        <div class="mui-container-fluid">
+          <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer">☰</a>
+          <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer">☰</a>
+          <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block">Save Energy At Home</span>
+        </div>
+      </div>
+<div href="" class="cube-switch" id="cube-switch" onclick="switchPress()" onclick="summit()">
+    <span class="switch">
+      <span class="switch-state off">Off</span>
+      <span class="switch-state on">On</span>
+    </span>
+  </div>
+  
+
+    </header>
+    <div id="content-wrapper">
+      <div class="mui--appbar-height"></div>
+      <div class="mui-container-fluid">
+        <br>
+     
+    </label><div ng-app="myApp" ng-controller="myCtrl">
+
+<div class="mui-row">
+<div class="mui-col-md-2">
+
+</div>
+<div class="mui-col-md-2"></div>
+  <div class="mui-col-md-2"><center>
+
+  <canvas id="canvas" width="300" height="300" > </canvas>
+
+  </center></div>
+  <div class="mui-col-md-6"><br>
+  Value Current : {{Value.value1}}<br>
+  Voltage : {{Value.Voltage}}<br>
+  Time to use :{{counter}}<br> 
+  Create time : {{Value.Create}}<br></div>
+</div>
+
+<div>
+  
+  <div id="chart" style="height: 400px; min-width: 310px"></div>
+</div>
+  </div>
+
+    
+
+
+ 
+   
+    
+    
+    
+  </div>
+</div>
+   
+
+      
+  
+    <footer id="footer">
+      <div class="mui-container-fluid">
+        <br>
+        Eakkaphop Wongsorn <br> NSC2016 <br> CPE@CMU 
+      </div>
+    </footer>
+
+  
+  </body>
+      
+</html>
