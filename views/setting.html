@@ -20,6 +20,8 @@
 var app = angular.module('myApp', []);
 
 app.controller('myCtrl', function($scope,$http,$timeout) {
+
+
   function Loop(){
             var timer;
  $scope.counter = 0;
@@ -27,12 +29,13 @@ app.controller('myCtrl', function($scope,$http,$timeout) {
            $scope.counter++;
 
 
-            $http.get('data_index.json').success (function(data){
+            $http.get('setting.json').success (function(data){
         
-        $scope.Value = data;
+        $scope.user= data;
         
 
 });
+
            
        // When the timeout is defined, it returns a
                     // promise object.
@@ -275,15 +278,14 @@ window.onload = function(){
   redraw_loop = setInterval(draw, 2000); //Draw a new chart every 2 seconds
   }
 
-
-
-
-</script>
- <script>
-    const APPKEY = "TJUAdIDmM6O1fY1";
-    const APPSECRET = "7FSGZ5bbSj0hk350Kvv09Z54L";
-    const APPID = "NSC2016SEAH";
-
+    var APPKEY ;
+    var APPSECRET;
+    var APPID;
+$.getJSON('setting.json', function (data) {
+    var APPKEY = data.appKey;
+    var APPSECRET = data.appSe;
+    var APPID = data.appId;
+});
     var microgear = Microgear.create({
         gearkey: APPKEY,
         gearsecret: APPSECRET
@@ -311,9 +313,10 @@ window.onload = function(){
         document.getElementById("cube-switch").style.display = "block";
     });
     microgear.resettoken();
-    microgear.connect(APPID);
-    
-</script>
+    microgear.connect(APPID);</script>
+
+
+
   </head>
   <body>
     <div id="sidedrawer" class="mui--no-user-select">
@@ -360,40 +363,34 @@ window.onload = function(){
 <div class="mui-row">
 
 
-<div class="mui-col-md-4"><center>
+<div class="mui-col-md-4"></div>
+<div class="mui-col-md-4">
+<form id="loginform" >
 
-  <canvas id="canvas" width="300" height="300" > </canvas>
+      <label >APP ID: </label>
+      <input type="text" id="appId" class="txtfield" tabindex="1" ng-model="user.appId">
+      
+       <label >APP KEY:</label>
+      <input type="text"  id="appKey" class="txtfield" tabindex="1" ng-model="user.appKey">
 
-  </center></div>
-
-  <div class="mui-col-md-4" style="text-align: center; vertical-align:center;"><br>
-  Value Current : {{Value.value1}}<br>
-  Voltage : {{Value.Voltage}}<br>
-  Time to use :{{counter}}<br> 
-  Create time : {{Value.Create}}<br></div>
-   <div class="mui-col-md-4"><center>
-    <div href="" class="cube-switch" id="cube-switch" onclick="switchPress()">
-        <span class="switch">
-            <span class="switch-state off">OFF</span>
-            <span class="switch-state on">ON</span>
-        </span>
-   </center> 
-   </div> 
-    </div>
+      <label >APP SECREAT:</label>
+      <input type="text"  id="appSe" class="txtfield" tabindex="1" ng-model="user.appSe">
+      
+      <div class="center">
+      <input type="submit" onclick="WriteToFile()" class="flatbtn-blu hidemodal" value="Add" id="submit" tabindex="3"></div>
+    </form>
 
 </div>
-<div>
-  
-  <div id="chart" style="height: 400px; min-width: 310px"></div>
+
+<div class="mui-col-md-4"></div>
+
 </div>
-  </div>
-
-    
 
 
- 
-   
-    
+
+
+
+
     
     
   </div>
