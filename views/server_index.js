@@ -46,10 +46,8 @@ var microgear = MicroGear.create({
 microgear.on('connected', function() {
     console.log('Connected...');
     microgear.setalias("Server_index");
-    setInterval(function() {
-        microgear.subscribe("/temp");
-        
-    },1000);
+    microgear.setname('controllerplug');
+    
 });
 
 
@@ -69,9 +67,9 @@ microgear.on('message', function(topic,body) {
 
     //Create some users
    
-    var data = { "value" : parseInt(body,10) , "time": Date.now() } ;
+    var data = { "value1" : parseInt(body,10) , "time": Date.now() } ;
     
-    fs.writeFile('data_index.json', JSON.stringify(data) , function (err) {
+    fs.writeFile('data_light.json', JSON.stringify(data) , function (err) {
   if (err) return console.log(err);
   console.log('data.json create');
 });

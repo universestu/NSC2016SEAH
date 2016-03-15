@@ -1,0 +1,231 @@
+/*!
+ * Unmodal -- jQuery modal plugin
+ * Version: 0.3.0
+ * https://github.com/wangchi/unmodal
+ *
+ * Copyright 2015 hiwangchi@gmail.com
+ * MIT License
+ */
+/**
+ * unmodal variables
+ * @author hiwangchi@gmail.com
+ */
+/**
+* reset.less v1.0.0
+* CSS Reset Styles
+* Source: http://github.com/wangchi/css-reset
+*
+* Mail: hiwangchi@gmail.com
+* Date: 2014-12-10 11:06:28
+*
+* MIT License
+*/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+div,
+p,
+th,
+td,
+pre,
+code,
+blockquote,
+fieldset,
+legend,
+form,
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+ol,
+ul {
+  list-style: none;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+i,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+q:before,
+q:after {
+  content: '';
+}
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
+}
+sup {
+  vertical-align: text-top;
+}
+sub {
+  vertical-align: text-bottom;
+}
+legend {
+  color: #333;
+}
+header,
+nav,
+main,
+article,
+aside,
+section,
+footer {
+  display: block;
+}
+input,
+textarea {
+  outline-style: none;
+}
+input[type="text"],
+input[type="password"],
+textarea {
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+textarea {
+  resize: none;
+}
+a,
+a:link,
+a:visited {
+  color: #36f;
+}
+a:active,
+a:focus {
+  outline: hidden;
+}
+a {
+  text-decoration: underline;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font: 14px "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
+  line-height: 1.5;
+  color: #666;
+}
+/**
+ * unmodal -- common.less
+ * @author hiwangchi@gmail.com
+ */
+.show {
+  display: block !important;
+}
+.hide {
+  display: none !important;
+}
+/**
+ * unmodal
+ * 对话框样式
+ * @author hiwangchi@gmail.com
+ */
+.unmodal-backdrop {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+.unmodal {
+  display: none;
+  position: absolute;
+  z-index: 10001;
+  top: 0;
+  left: 0;
+}
+.unmodal .unmodal-header {
+  position: relative;
+  height: 46px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+.unmodal .unmodal-header .title {
+  margin: 0;
+  padding: 0;
+  padding-left: 15px;
+  line-height: 46px;
+  font-weight: normal;
+  font-size: 16px;
+  color: #333;
+}
+.unmodal .unmodal-header .unmodal-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 22px;
+  color: #666;
+  text-decoration: none;
+}
+.unmodal .unmodal-header .unmodal-close:hover {
+  color: #fa7d3c;
+}
+.unmodal .unmodal-cont {
+  padding: 15px;
+  background: #fff;
+}
+.unmodal .unmodal-footer {
+  width: 100%;
+  height: 56px;
+  background: #f1f1f1;
+  font-size: 0;
+  text-align: center;
+}
+.unmodal .unmodal-footer .btn {
+  display: inline-block;
+  margin: 12px 10px;
+  line-height: 30px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.unmodal .unmodal-footer .btn-ok {
+  border: 1px solid #3ec291;
+  background: #65cea7;
+  color: #fff;
+}
+.unmodal .unmodal-footer .btn-ok:hover {
+  background: #4ac598;
+}
+.unmodal .unmodal-footer .btn-cancel {
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+}
+.unmodal .unmodal-footer .btn-cancel:hover {
+  background: #e6e6e6;
+  border-color: #adadad;
+}

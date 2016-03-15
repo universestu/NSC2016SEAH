@@ -20,6 +20,7 @@
 var app = angular.module('myApp', []);
 
 app.controller('myCtrl', function($scope,$http,$timeout) {
+  
   function Loop(){
             var timer;
  $scope.counter = 0;
@@ -340,7 +341,8 @@ window.onload = function(){
         <div class="mui-container-fluid">
           <a class="sidedrawer-toggle mui--visible-xs-inline-block mui--visible-sm-inline-block js-show-sidedrawer">☰</a>
           <a class="sidedrawer-toggle mui--hidden-xs mui--hidden-sm js-hide-sidedrawer">☰</a>
-          <span class="mui--text-title mui--visible-xs-inline-block mui--visible-sm-inline-block">Save Energy At Home</span>
+         
+          <span class="mui--text-title" >Save Energy At Home</span>
         </div>
       </div>
 
@@ -368,6 +370,7 @@ window.onload = function(){
 
   <div class="mui-col-md-4" style="text-align: center; vertical-align:center;"><br>
   Value Current : {{Value.value1}}<br>
+
   Voltage : {{Value.Voltage}}<br>
   Time to use :{{counter}}<br> 
   Create time : {{Value.Create}}<br></div>

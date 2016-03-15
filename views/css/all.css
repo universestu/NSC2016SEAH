@@ -14,7 +14,7 @@
     white-space: nowrap;
     background:#2574A9;
   margin: 15px;
-}
+}f
 
 /* The switch */
 .cube-switch .switch {
@@ -134,10 +134,7 @@ body{
   background: #e1dfdb;
   
 }
-input{
-  display: block;
-  margin: 50px auto;
-}
+
 a:link{
   color: #333;
   font-family: calibri;

@@ -287,9 +287,45 @@ window.onload = function(){
 
 
 </script>
+<link rel="stylesheet" href="css/kc.fab.css"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+]
+        <script src="js/kc.fab.min.js"></script>
+        <script>
+            $(document).ready(function(){
+               var links = [
+{
+  "bgcolor":"#03A9F4",
+  "icon":"+"
+},
+{
+  
+  "bgcolor":"#DB4A39",
+  "color":"#fffff",
+  "icon":"<i class='fa fa-exclamation'></i>",
+  "target":"_blank"
+},
+{
+  
+  "bgcolor":"#3B5998",
+  "color":"#fffff",
+  "icon":"<i class='fa fa-cog'></i>",
+  "target":"_blank"
+},
+{
+  "url":"index.html",
+  "bgcolor":"#263238",
+  "color":"white",
+  "icon":"<i class='fa fa-home'></i>"
+}
+]
+
+                $('.kc_fab_wrapper').kc_fab(links);
+            })
+        </script>
 
   </head>
-  <body>
+  <body> <div class="kc_fab_wrapper" ></div>
     <div id="sidedrawer" class="mui--no-user-select">
       <div id="sidedrawer-brand" class="mui--appbar-line-height mui--text-title">SEAH</div>
      <div class="mui--divider-bottom"><center>
@@ -330,9 +366,9 @@ window.onload = function(){
       <div class="mui--appbar-height"></div>
       <div class="mui-container-fluid">
         <br>
-     
+    
     </label><div ng-app="myApp" ng-controller="myCtrl">
-
+ 
 <div class="mui-row">
 <div class="mui-col-md-2">
 
